@@ -15,7 +15,7 @@ Email contact: mae[at]csp-inc.org
 
 Date created: 11/10/2025
 
-Date last updated: 11/13/2025
+Date last updated: 2/25/2026
 
 """
 
@@ -47,8 +47,8 @@ print(f"Found {len(url_csvs)} URL CSVs and {len(text_csvs)} text CSVs.")
 # extract date from filename
 def extract_date_from_filename(fname):
     """
-    Extracts date from GDELT filename like:
-    'gdelt_gkg_20130414.csv' → '2013-04-14'
+    Extracts date from GDELT filename
+    e.g., 'gdelt_gkg_20130414.csv' becomes '2013-04-14'
     Returns (date_str, year)
     """
     match = re.search(r"(\d{8})", fname)
@@ -67,8 +67,8 @@ def read_csv(fpath):
         date_fmt, year = extract_date_from_filename(base)
 
         # Keep both fields
-        df["date"] = date_fmt               # string YYYY-MM-DD
-        df["year"] = year                   # string YYYY
+        df["date"] = date_fmt # string YYYY-MM-DD
+        df["year"] = year # string YYYY
 
         # other option - could also store as a real datetime column (handy for filtering/sorting)
         # df["date"] = pd.to_datetime(df["date"], errors="coerce")
@@ -94,7 +94,7 @@ if url_csvs:
     url_master.to_csv(out_url,
                       index=False,
                       quoting=csv.QUOTE_ALL,
-                      doublequote=True,      # use "" for quotes inside text
+                      doublequote=True,
                       encoding="utf-8-sig",
                       lineterminator="\n")
     print(f"Saved master URL table: {out_url} ({len(url_master)} rows)")
@@ -107,7 +107,7 @@ if text_csvs:
     text_dfs = [read_csv(f) for f in text_csvs]
     text_master = pd.concat(text_dfs, ignore_index=True)
     
-    # Drop duplicates by url if present
+    # Drop duplicates by URL if present
     if "url" in text_master.columns:
         text_master = text_master.drop_duplicates(subset=["url"])
     
@@ -115,7 +115,7 @@ if text_csvs:
     text_master.to_csv(out_text, 
                        index=False,
                        quoting=csv.QUOTE_ALL,
-                       doublequote=True,      # use "" for quotes inside text
+                       doublequote=True,
                        encoding="utf-8-sig",
                        lineterminator="\n")
     print(f"Saved master TEXT table: {out_text} ({len(text_master)} rows)")

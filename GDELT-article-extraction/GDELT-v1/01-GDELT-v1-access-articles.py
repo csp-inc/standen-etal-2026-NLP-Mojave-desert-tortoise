@@ -13,7 +13,7 @@ Email contact: mae[at]csp-inc.org
 
 Date created: 11/10/2025
 
-Date last updated: 11/13/2025
+Date last updated: 2/25/2026
 
 """
 
@@ -67,36 +67,7 @@ def extract_text_from_urls(url_list, max_articles=50):
     Extract text from URLs, attempting direct access first and falling back to the
     Wayback Machine if the original link is unavailable.
     Returns a DataFrame including a flag for whether the archived version was used.
-    """
-    # previous version of function:
-    #articles = []
-    #for url in url_list[:max_articles]:
-    #    try:
-    #        a = Article(url)
-    #        a.download()
-    #        a.parse()
-    #    except Exception as e:
-    #        print(f"Failed to parse {url}: {e}")
-    #        # Try the Wayback Machine fallback
-    #        archived = get_archived_url(url)
-    #        if archived:
-    #            print(f"Trying archived version: {archived}")
-    #            try:
-    #                a = Article(archived)
-    #                a.download()
-    #                a.parse()
-    #            except Exception as e2:
-    #                print(f"Archived parse failed for {url}: {e2}")
-    #                continue
-    #        else:
-    #            continue
-    #    articles.append({
-    #        "url": url,
-    #        "title": a.title,
-    #        "text": a.text
-    #    })
-    #return pd.DataFrame(articles)
-    
+    """  
     articles = []
     archived_count = 0
     total_attempted = 0
@@ -120,7 +91,6 @@ def extract_text_from_urls(url_list, max_articles=50):
                     a.download()
                     a.parse()
                 except Exception as e2:
-                    #print(f"Archived parse failed for {url}: {e2}")
                     continue
             else:
                 continue
@@ -290,15 +260,6 @@ def query_gkg_multiple_years(keywords, start_year=2013, end_year=2015, save_dir=
 if __name__ == "__main__":
 
     # Broadened keyword coverage for initial URL pull
-    # initial set of keywords used:
-    #keywords = [
-    #    "desert tortoise",
-    #    "mojave desert tortoise",
-    #    "gopherus agassizii",
-    #    "tortoise",
-    #    "mojave desert",
-    #    "MojaveDesertTortoise"
-    #]
     # updated keywords to match Twitter scrape:
     keywords = [
         "Mojave Desert Tortoise",
@@ -317,7 +278,7 @@ if __name__ == "__main__":
         "mojave desert"
     ]
 
-    # Optional GDELT theme codes (semantic tags)
+    # GDELT theme codes (semantic tags)
     theme_codes = [
         "ANIMALS_TURTLES",
         "ENV_DESERTIFICATION",

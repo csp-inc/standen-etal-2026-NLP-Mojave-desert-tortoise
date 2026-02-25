@@ -1,4 +1,5 @@
-# TLD-NLP
+# Assessing the impact of conservation outreach on online sentiment towards the Mojave desert tortoise using Natural Language Processing
+### Authors: Madeline P. Standen, L. Mae Lacey, Alexander J. Robillard, Kaitlyn Shaw, James Danoff-Burg, Elissa Olimpi, Justin Suraci, Brett Dickson
 An [National Fish and Wildlife Foundation](https://www.nfwf.org/) project in collaboration with the [Conservation Science Partners](https://www.csp-inc.org/) [T&E Lab](https://csp-inc.org/t-e-lab/) and the [Living Desert Zoo and Gardens](https://www.livingdesert.org/) using natural language processing ("NLP") for sentiment analysis of the twitter ('X') platform. This project leverages the 'Tweepy' library API to access and scrape twitter for sentiment analysis 
 
 ## 🐢x🐦: Repository Structure <a name="repo"></a>

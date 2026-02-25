@@ -1,8 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Dec  3 15:23:47 2025
 
-@author: Mae Lacey
+Project: TLD NFWF
+ 
+Script name: 01-GDELT-v2-stage2.py
+
+Purpose of script: this script extracts article text from URLs
+
+Author: Mae Lacey - Data Scientist
+
+Email contact: mae[at]csp-inc.org
+
+Date created: 12/3/2025
+
+Date last updated: 2/25/2026
+
 """
 
 import os
@@ -14,22 +26,22 @@ import multiprocessing as mp
 import requests
 from trafilatura import extract, fetch_url
 
-# ===============================================================
-# CONFIG
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Configuring directories
+# -----------------------------------------------------------------------------
 STAGE1_URL_FILE = "./gdelt_v2_stage1/urls_all.csv"
 CACHE_DIR = "./article_cache"
 OUTFILE = "./gdelt_v2_stage1/GDELT-v2-final/article_text_master.csv"
 os.makedirs(CACHE_DIR, exist_ok=True)
 
-MAX_PROCESSES = 4   # keep this small so your machine stays usable
+MAX_PROCESSES = 4  # keep this small so our machine stays usable 
 
 
-# ===============================================================
-# UTILS
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Utils
+# -----------------------------------------------------------------------------
 def clean_url(u):
-    """Basic URL sanitizer."""
+    """Basic URL cleaner."""
     if not isinstance(u, str):
         return None
     u = u.strip()
@@ -47,9 +59,9 @@ def url_to_cachefile(url):
     return os.path.join(CACHE_DIR, safe + ".json")
 
 
-# ===============================================================
-# ARTICLE EXTRACTION WORKER
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Function to extract article text
+# -----------------------------------------------------------------------------
 def extract_article(url):
     """Worker process for extracting article text with caching."""
     url = clean_url(url)
@@ -99,9 +111,9 @@ def extract_article(url):
     return None
 
 
-# ===============================================================
-# MAIN
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Main
+# -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("Loading URL list...")
     df = pd.read_csv(STAGE1_URL_FILE)
@@ -128,9 +140,9 @@ if __name__ == "__main__":
         if cu in already_done:
             continue
         cachefile = url_to_cachefile(cu)
-        # If you want to skip re-downloading cached URLs, keep this condition:
+        # skip re-downloading cached URLs
         if os.path.exists(cachefile):
-            # It's already cached; we'll use it later when we rebuild the CSV
+            # this is already cached; we'll use it later when we rebuild the CSV
             continue
         urls_to_process.append(cu)
 

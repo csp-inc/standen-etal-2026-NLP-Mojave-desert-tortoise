@@ -1,8 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Nov 21 10:51:18 2025
 
-@author: Mae Lacey
+Project: TLD NFWF
+ 
+Script name: 01-GDELT-v2-stage1.py
+
+Purpose of script: this script accesses URLs from 2015-2024 using GDELT v2.0
+
+Author: Mae Lacey - Data Scientist
+
+Email contact: mae[at]csp-inc.org
+
+Date created: 11/21/2025
+
+Date last updated: 2/25/2026
+
 """
 
 import os
@@ -16,9 +28,9 @@ import pandas as pd
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# ===============================================================
-# CONFIGURATION
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Configuring directories
+# -----------------------------------------------------------------------------
 SAVE_DIR = "./gdelt_v2_stage1"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
@@ -28,9 +40,9 @@ GDELT_V2_BASE = "http://data.gdeltproject.org/gdeltv2/"
 MAX_DOWNLOAD_THREADS = 20
 
 
-# ===============================================================
-# URL CLEANER
-# ===============================================================
+# -----------------------------------------------------------------------------
+# URL cleaner
+# -----------------------------------------------------------------------------
 def clean_url(u):
     if not isinstance(u, str):
         return None
@@ -42,9 +54,9 @@ def clean_url(u):
     return u if u.startswith("http") else None
 
 
-# ===============================================================
-# GENERATE GDELT v2 MINUTE-FILE URLs
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Generate GDELT v2 minute file URLs
+# -----------------------------------------------------------------------------
 def generate_gkg_v2_urls_for_day(date):
     urls = []
     for hh in range(24):
@@ -54,9 +66,9 @@ def generate_gkg_v2_urls_for_day(date):
     return urls
 
 
-# ===============================================================
-# DOWNLOAD + FILTER ONE MINUTE-FILE
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Download and filter each minute file
+# -----------------------------------------------------------------------------
 def fetch_and_filter_single_file(url, keyword_pattern, theme_pattern):
     try:
         r = requests.get(url, timeout=60)
@@ -93,9 +105,9 @@ def fetch_and_filter_single_file(url, keyword_pattern, theme_pattern):
     return df.rename(columns={"col_4": "SOURCEURL"})
 
 
-# ===============================================================
-# PROCESS ONE DAY
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Process a single day
+# -----------------------------------------------------------------------------
 def query_gkg_v2_day(date, keywords, theme_codes=None):
     urls = generate_gkg_v2_urls_for_day(date)
 
@@ -122,9 +134,9 @@ def query_gkg_v2_day(date, keywords, theme_codes=None):
     return pd.concat(results, ignore_index=True)
 
 
-# ===============================================================
-# PROCESS ONE YEAR
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Process a single year
+# -----------------------------------------------------------------------------
 def query_gkg_v2_year(year, keywords, theme_codes=None):
     start = datetime(year, 1, 1)
     end = datetime(year, 12, 31)
@@ -149,15 +161,13 @@ def query_gkg_v2_year(year, keywords, theme_codes=None):
     return urls_accum
 
 
-# ===============================================================
-# PARSE DATE FROM FILENAME
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Parse date from file name
+# -----------------------------------------------------------------------------
 def parse_date_from_filename(filename):
     """
-    Expect filenames like:
-      - gdelt_gkg_YYYYMMDD.csv
-    If you still have some older files, you can extend this to handle:
-      - gdelt_gkg_YYYY_YYYYMMDD.csv
+    Expects filenames like: gdelt_gkg_YYYYMMDD.csv, but can also accommodate
+    filenames in older format (see fallback)
     """
     # Try simple pattern first: gdelt_gkg_YYYYMMDD.csv
     m = re.match(r"gdelt_gkg_(\d{8})\.csv$", filename)
@@ -176,9 +186,9 @@ def parse_date_from_filename(filename):
         return None, None
 
 
-# ===============================================================
-# MAIN
-# ===============================================================
+# -----------------------------------------------------------------------------
+# Main
+# -----------------------------------------------------------------------------
 if __name__ == "__main__":
     keywords = [
         "Mojave Desert Tortoise", "Gopherus agassizii", "Desert Tortoise",
@@ -205,15 +215,13 @@ if __name__ == "__main__":
     #print(f"Saved {len(all_urls)} unique URLs to {URL_FILE}")
     # use this code chunk when running over entire study period ------ ^ ------
     
-    # use this code chunk for shorter period testing ----------- v ------------
-    # TESTING: scrape only a single week
+    # use this code chunk for running on shorter periods ------------- v ------
     start_date = datetime(2024, 12, 30)
     end_date   = datetime(2024, 12, 31)
     
     print(f"\n===== RUNNING FROM {start_date.date()} TO {end_date.date()} =====")
     
     current = start_date
-    #all_urls = []
     
     while current <= end_date:
         date_str = current.strftime("%Y%m%d")
@@ -230,7 +238,6 @@ if __name__ == "__main__":
     
         if df is not None and not df.empty:
             df.to_csv(out, index=False)
-            #all_urls.extend(df["SOURCEURL"].dropna().tolist())
         else:
             print(f"No results for {date_str}")
     
@@ -240,9 +247,9 @@ if __name__ == "__main__":
     #all_urls = list(set(all_urls))
     #pd.DataFrame({"url": all_urls}).to_csv(URL_FILE, index=False)
     
-    # ===========================================================
+    # -----------------------------------------------------------
     # Rebuild URL list with `url`, `date`, `year`
-    # ===========================================================
+    # -----------------------------------------------------------
     print("\nRebuilding URL list from saved CSVs...")
 
     master_rows = []
@@ -266,8 +273,8 @@ if __name__ == "__main__":
             if df.empty:
                 continue
 
-            # Add date and year columns (same for all rows in this file)
-            df["date"] = date_str           # 'YYYY-MM-DD'
+            # Add date and year columns
+            df["date"] = date_str # 'YYYY-MM-DD'
             df["year"] = int(year)
 
             master_rows.append(df)
@@ -275,7 +282,7 @@ if __name__ == "__main__":
     if master_rows:
         urls_df = pd.concat(master_rows, ignore_index=True)
 
-        # Deduplicate on URL; keep first occurrence of date/year
+        # Deduplicate on URL -- keep first occurrence of date/year
         urls_df = urls_df.drop_duplicates(subset=["url"])
 
         # Save master URL list with date & year
@@ -284,29 +291,3 @@ if __name__ == "__main__":
         print(f"\nStage 1 complete — saved {len(urls_df)} unique URLs with date/year to {URL_FILE}.")
     else:
         print("\nNo gdelt_gkg_*.csv files found or no URLs to write.")
-    
-    # ALTERNATE Deduplicate & save
-    #print("\nRebuilding URL list from saved CSVs...")
-
-    #all_urls = []
-    
-    #for file in os.listdir(SAVE_DIR):
-    #    if file.endswith(".csv") and file.startswith("gdelt_gkg_"):
-    #        path = os.path.join(SAVE_DIR, file)
-    #        try:
-    #            df = pd.read_csv(path, usecols=["SOURCEURL"])
-    #            urls = df["SOURCEURL"].dropna().tolist()
-    #            all_urls.extend(urls)
-    #        except Exception as e:
-    #            print(f"Could not read URLs from {file}: {e}")
-    
-    # Deduplicate
-    #all_urls = list(set(all_urls))
-    
-    # Save master URL list
-    #pd.DataFrame({"url": all_urls}).to_csv(URL_FILE, index=False)
-
-    #print(f"\nStage 1 complete — saved {len(all_urls)} unique URLs.")
-    # use this code chunk for shorter period testing ----------- ^ ------------
-
-    
