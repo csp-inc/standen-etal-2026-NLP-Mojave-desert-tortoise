@@ -9,13 +9,13 @@
 ##
 ## Author: Mae Lacey
 ##
-## Date last updated: 12/8/2025
+## Date last updated: 2/25/2026
 ##
 ## Email contact: mae[at]csp-inc.org
 ##
 ## ---------------------------
 
-setwd("C:/Users/Mae Lacey/Documents/github-repos/TLD-NLP/GDELT-article-extraction/GDELT-v2/gdelt_v2_stage1/")
+setwd("standen-etal-2026-NLP-Mojave-desert-tortoise/GDELT-article-extraction/GDELT-v2/gdelt_v2_stage1/")
 
 urls_all <- read.csv("urls_all.csv")
 article_text <- read.csv("GDELT-v2-final/article_text_master.csv")
@@ -25,10 +25,9 @@ all_article_data <- article_text %>%
 
 #write.csv(all_article_data, "GDELT-v2-final/article_text_master_wDates.csv")
 
-# Filter for records containing any of the target phrases in the text OR title
-#keywords <- c("mojave desert tortoise", "gopherus agassizii", "mojavedeserttortoise", "desert tortoise") 
+# filter for records containing any of the target phrases in the text OR title
+# set keywords
 keywords <- c("mojave desert tortoise", "gopherus agassizii", "mojavedeserttortoise") 
-#keywords <- c("tortoise") 
 
 # then filter
 text_filtered <- all_article_data %>%

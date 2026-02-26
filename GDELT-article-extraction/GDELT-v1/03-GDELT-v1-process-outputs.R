@@ -8,7 +8,7 @@
 ##
 ## Author: Mae Lacey
 ##
-## Date last updated: 12/8/2025
+## Date last updated: 2/25/2026
 ##
 ## Email contact: mae[at]csp-inc.org
 ##
@@ -18,16 +18,15 @@
 library(stringr)
 library(dplyr)
 
-setwd("C:/Users/Mae Lacey/Documents/github-repos/TLD-NLP/GDELT-article-extraction/GDELT-v1/")
+setwd("standen-etal-2026-NLP-Mojave-desert-tortoise/GDELT-article-extraction/GDELT-v1/")
 
 # read in CSV
 GDELTv1_text <- read.csv("gdelt_v1_final/gdelt_v1_gkg_master_text.csv")
 GDELTv1_urls <- read.csv("gdelt_v1_final/gdelt_v1_gkg_master_urls.csv")
 
-# Filter for records containing any of the target phrases in the text OR title
-#keywords <- c("mojave desert tortoise", "gopherus agassizii", "mojavedeserttortoise", "desert tortoise") 
+# filter for records containing any of the target phrases in the text OR title
+# set keywords
 keywords <- c("mojave desert tortoise", "gopherus agassizii", "mojavedeserttortoise") 
-#keywords <- c("tortoise") 
 
 # then filter
 text_filtered <- GDELTv1_text %>%
