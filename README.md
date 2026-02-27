@@ -8,7 +8,7 @@ An [National Fish and Wildlife Foundation](https://www.nfwf.org/) project in col
 ├── Tweet-extraction  # Tweet scraping 
 ├── Preprocessing_and_analyses  # Data preprocessing and analyses
 ├── .gitignore
-└──  README.md
+└── README.md
 ```
 
 ## :information_source: About this Project <a name="about"></a>
@@ -31,6 +31,3 @@ To quantify the baseline sentiment of Twitter posts and news articles regarding 
 We also implemented a formal survey to identify outreach events that may have impacted public perception of the tortoise. We then used this survey information to analyze the impacts of outreach on sentiment, engagement, and activity. We used two-sided Monte Carlo permutation tests to assess if sentiment, engagement, or activity on Twitter were different in weeks with outreach events versus weeks without events (Fay and Shaw 2010). To examine how sentiment, engagement, and activity on Twitter evolved before, during, and after outreach events, we visualized pairwise temporal cross-correlations between event occurrences and weekly sentiment, engagement, and activity on Twitter.
 
 To identify which characteristics of outreach programs were most effective at driving behavioral change and online engagement, we employed AutoRegressive Integrated Moving Average with eXogenous variables (ARIMAX) models (Pokhrel and Adhikari 2023, Shyan and Singh 2025). ARIMAX models allowed us to assess if outreach events impacted sentiment of tweets in the weeks during which events occurred. We modeled weekly average tweet sentiment using ARIMAX regression in response to categorical event characteristics.
-
-## Notebooks <a name="notebooks"></a>
-Generated collection of notebooks used to produce and analyze files in data folder, see file "NFWF_Notebook_directory.txt" within this folder for details on notebooks and structure.
