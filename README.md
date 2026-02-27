@@ -6,17 +6,15 @@ An [National Fish and Wildlife Foundation](https://www.nfwf.org/) project in col
 ```bash
 ├── data               
 │         
-├── notebooks           # exploratory analysis
-├── scripts             # programs
+├── GDELT-article-extraction # article extraction workflows
+├── notebooks                # exploratory analysis
+├── scripts                  # programs
 ├── .gitignore
 └──  README.md
 ```
 
 ## :information_source: About this Project <a name="about"></a>
-In today’s world, social media plays a critical role in both science communication and stimulating behavioral change. Here we conduct a public sentiment analysis of social media (e.g., Twitter) and news articles related to the Mojave desert tortoise (MDT) and outreach programs throughout the tortoise's range. Natural Language Processing techniques such as sentiment analysis offers a paradigm shift from traditional approaches to studying human dimensions in conservation and will provide us with a quantitative understanding of public awareness, attitudes and engagement towards the MDT, and TLD outreach programs.
-
-## Data <a name="Data"></a>
-A collation of originally generated data outputs, see file "NFWF_File_Directory.txt" within this folder for details on files and structure.
+In today’s world, social media plays a critical role in both science communication and stimulating behavioral change. Indeed, public attitudes towards a species can determine a community’s willingness to support conservation management actions. As such, outreach–which can promote changes in human perceptions and behavior–can play a central role in determining conservation outcomes. Large and increasing volumes of user-generated, open source online content including social media posts and news articles represent a rich resource for studying public perceptions of and engagement with conservation topics. Here we conduct a public sentiment analysis of social media (i.e., Twitter) and news articles related to the Mojave desert tortoise (</i>Gopherus agassizii</i>, hereafter ‘tortoise’) and outreach programs throughout the tortoise's range. Natural Language Processing techniques such as sentiment analysis offers a paradigm shift from traditional approaches to studying human dimensions in conservation and will provide us with a quantitative understanding of public awareness, attitudes and engagement towards the MDT, and TLD outreach programs.
 
 ## Notebooks <a name="notebooks"></a>
 Generated collection of notebooks used to produce and analyze files in data folder, see file "NFWF_Notebook_directory.txt" within this folder for details on notebooks and structure.
