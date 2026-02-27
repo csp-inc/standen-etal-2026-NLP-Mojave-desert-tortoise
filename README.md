@@ -6,7 +6,7 @@ An [National Fish and Wildlife Foundation](https://www.nfwf.org/) project in col
 ```bash
 ├── GDELT-article-extraction # article extraction workflows
 ├── Tweet-extraction  # Tweet scraping 
-├── Preprocessing_and_analyses  # Data preprocessing and analyses
+├── Preprocessing-and-analyses  # Data preprocessing and analyses
 ├── .gitignore
 └── README.md
 ```
