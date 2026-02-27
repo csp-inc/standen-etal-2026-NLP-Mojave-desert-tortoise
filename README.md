@@ -4,11 +4,9 @@ An [National Fish and Wildlife Foundation](https://www.nfwf.org/) project in col
 
 ## 🐢x🐦: Repository Structure <a name="repo"></a>
 ```bash
-├── data               
-│         
 ├── GDELT-article-extraction # article extraction workflows
-├── notebooks                # exploratory analysis
-├── scripts                  # programs
+├── Tweet-extraction  # Tweet scraping 
+├── Preprocessing_and_analyses  # Data preprocessing and analyses
 ├── .gitignore
 └──  README.md
 ```

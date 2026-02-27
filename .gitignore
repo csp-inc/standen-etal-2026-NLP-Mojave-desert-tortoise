@@ -147,3 +147,5 @@ results
 .Rproj.user
 figures
 *.png
+*.Rproj
+.DS_Store
