@@ -34,10 +34,17 @@ To identify which characteristics of outreach programs were most effective at dr
 
 ## References
 Blei, David M., Andrew Y. Ng, and Michael I. Jordan. 2003. “Latent Dirichlet Allocation.” Journal of Machine Learning Research, no. 3: 993–1022.
+
 Fay, Michael P., and Pamela A. Shaw. 2010. “Exact and Asymptotic Weighted Logrank Tests for Interval Censored Data: The Interval R Package.” Journal of Statistical Software 36 (2): 1–34. https://doi.org/10.18637/jss.v036.i02.
+
 Fink, Christoph, Anna Hausmann, and Enrico Di Minin. 2020. “Online Sentiment towards Iconic Species.” Biological Conservation 241 (January): 108289. https://doi.org/10.1016/j.biocon.2019.108289.
+
 GDELT Project. 2026. “Global Database of Events, Language, and Tone (GDELT).” https://www.gdeltproject.org/.
+
 Hutto, C., and Eric Gilbert. 2014. “VADER: A Parsimonious Rule-Based Model for Sentiment Analysis of Social Media Text.” Proceedings of the International AAAI Conference on Web and Social Media 8 (1): 216–25. https://doi.org/10.1609/icwsm.v8i1.14550.
+
 Pokhrel, Aditya, and Renisha Adhikari. 2023. “Leveraging Exogenous Insights: A Comparative Forecast of Paddy Production in Nepal Using ARIMA and ARIMAX Models.” Economic Review of Nepal 6 (1): 52–69. https://doi.org/10.3126/ern.v6i1.67970.
+
 Roesslein, J. 2020. “Tweepy: An Easy-to-Use Python Library for Accessing the Twitter API.” GitHub repository. Version v2. Tweepy. https://github.com/tweepy/tweepy.
+
 Shyan, H., and K. Singh. 2025. “A Comprehensive Analysis of Time Series Models and Sentiment Analysis.” In Innovations in Data Analytics: Selected Papers of ICIDA 2024, 2nd ed., vol. 2. Springer International Publishing.
