@@ -8,7 +8,7 @@
 ##
 ## Author: Madeline Standen
 ##
-## Date last updated: 2/27/2026
+## Date last updated: 10/19/2026
 ##
 ## Email contact: standenmadeline[at]gmail.com, madi[at]csp-inc.org
 ##
@@ -109,20 +109,3 @@ rm(week_key)
 
 write.csv(weekly_tweets,"./data_final/NFWF_weekly_tweets.csv")
 
-# Events -----
-
-long_with_years <- read.csv("./data_final/NFWF_events_final.csv")[,-1]
-length(unique(long_with_years$Name))
-sort(unique(long_with_years$Year))
-
-weekly_events <- long_with_years %>% 
-  group_by(Week, Month, Year) %>%
-  summarise(
-    Occurrence = n(),
-    Unique_occurrence = sum(length(unique(Name))),
-    Event = sum(Type == "Event", na.rm = TRUE),
-    Program = sum(Type == "Program", na.rm = TRUE),
-    .groups = "drop"
-  )
-
-write.csv(weekly_events,"./data_final/NFWF_weekly_events.csv")

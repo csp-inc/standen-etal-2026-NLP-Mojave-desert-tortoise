@@ -8,7 +8,7 @@
 ##
 ## Author: Madeline Standen
 ##
-## Date last updated: 2/27/2026
+## Date last updated: 10/19/2026
 ##
 ## Email contact: standenmadeline[at]gmail.com, madi[at]csp-inc.org
 ##
@@ -141,8 +141,8 @@ optimal_k <- coherence_results$k[
 
 print(optimal_k)
 
-write.csv(coherence_results,"./results/coherence_2_30_articles.csv")
-coherence_results <- read.csv("./results/coherence_2_30_articles.csv")
+write.csv(coherence_results,"./data_final/coherence_2_30_articles.csv")
+coherence_results <- read.csv("./data_final/coherence_2_30_articles.csv")
 
 # Plot coherence by K
 ggplot(coherence_results, aes(x = k, y = coherence)) +
@@ -295,7 +295,7 @@ projection_df$article_id <- rownames(dtm_tfidf_umap_matrix)
 # Adding info to the projection dataset
 gdelt_all_clean <- gdelt_all_clean %>% mutate(article_id = as.character(article_id))
 projection_df <- projection_df %>% left_join(gdelt_all_clean)
-write.csv(projection_df,"./results/UMAP_articles.csv")
+write.csv(projection_df,"./data_final/UMAP_articles.csv")
 
 
 ggplot(projection_df, aes(x = x, y = y, colour = factor(topic))) +
@@ -479,8 +479,8 @@ optimal_k <- coherence_results$k[
 
 print(optimal_k)
 
-write.csv(coherence_results,"./results/coherence_2_30_tweets.csv")
-coherence_results <- read.csv("./results/coherence_2_30_tweets.csv")
+write.csv(coherence_results,"./data_final/coherence_2_30_tweets.csv")
+coherence_results <- read.csv("./data_final/coherence_2_30_tweets.csv")
 
 
 p_tweet_coherence <- ggplot(coherence_results, aes(x = k, y = coherence)) +
@@ -662,7 +662,7 @@ tweet_raw <- tweet_raw %>% mutate(tweet_id = as.character(tweet_id))
 # Adding info to the projection dataset 
 projection_df <- projection_df %>% left_join(tweet_raw)
 
-write.csv(projection_df,"./results/UMAP_tweets.csv")
+write.csv(projection_df,"./data_final/UMAP_tweets.csv")
 
 
 # ggplot(projection_df, aes(x = x, y = y, colour = factor(topic))) +
@@ -674,7 +674,7 @@ write.csv(projection_df,"./results/UMAP_tweets.csv")
 #     y = "Component 2",
 #     colour = "Topic"
 #   )
-projection_df <- read.csv("./results/UMAP_tweets.csv")
+projection_df <- read.csv("./data_final/UMAP_tweets.csv")
 n_topics <- 7
 hist(projection_df$topic_prob)
 

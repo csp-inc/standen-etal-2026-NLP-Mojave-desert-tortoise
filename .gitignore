@@ -130,7 +130,7 @@ dmypy.json
 
 #data
 # Ignore all files and subdirectories in the data directory
-!/data_files/*
+data_final/*
 *.csv
 
 # credentials
