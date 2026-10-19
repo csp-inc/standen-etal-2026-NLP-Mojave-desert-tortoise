@@ -80,7 +80,7 @@ article_raw <- article_raw %>%
   ))
 
 ### Weekly datasets -----
-# This dataset represents weekly aggregated metrics of twitter data and event data for the entire study period
+# This dataset represents weekly aggregated metrics of twitter data and for the entire study period
 tweet_counts <- read.csv("./data_final/NFWF_weekly_tweets.csv")[,-1]
 tweet_counts <- tweet_counts %>% mutate(Week_of_start = as.Date(Week_of_start),
                                         Week_of_end = as.Date(Week_of_end))
