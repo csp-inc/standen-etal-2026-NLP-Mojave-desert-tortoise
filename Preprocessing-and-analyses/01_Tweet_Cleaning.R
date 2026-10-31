@@ -35,6 +35,8 @@ tweet_raw_all <- read.csv("./data_final/NFWF_alltweets_raw.csv") %>% filter(Date
 nrow(tweet_raw_all)
 colnames(tweet_raw_all)
 
+tweet_raw_all <- tweet_raw_all %>% distinct()
+
 # Filtering out tweets missing values in essential columns
 tweet_raw_all <- tweet_raw_all[complete.cases(tweet_raw_all[, c("Date", "User", "Tweet")]), ]
 
@@ -47,7 +49,7 @@ tweet_raw_all$User <- as.character(tweet_raw_all$User)
 
 # Part 2: Cleaning -----
 # Cleaning tweet text using standard NLP cleaning protocols and running vader analyses in R on this cleaned text
-
+nrow(tweet_raw_all)
 tweet_raw_all <- tweet_raw_all %>% 
   filter(Date >= "2012-01-01") %>%
   mutate(Tweet_cleaned = gsub("\\s+", " ", Tweet), # Clean extra white space within text
@@ -70,7 +72,7 @@ tweet_raw_all <- tweet_raw_all %>%
     Tweet_cleaned = gsub(" amp ", " & ", Tweet_cleaned),
     Tweet_cleaned = trimws(Tweet_cleaned)) %>%                              # Trim leading or trailing spaces
     filter(!str_detect(Tweet_cleaned,"^(RT|Rt|rt|retweet)"))            # Remove tweets that have rt at start
-    
+nrow(tweet_raw_all)    
   
 # Removing tweets that are now empty and removing exact dupicates, keeping only first instance
 tweet_raw <- tweet_raw_all %>% filter(nchar(Tweet_cleaned) > 0) 

@@ -155,19 +155,15 @@ ggplot(coherence_results, aes(x = k, y = coherence)) +
   ) +
   theme_minimal()
 
+coherence_results <- coherence_results %>% filter(k <= 10)
+
 p_article_coherence <- ggplot(coherence_results, aes(x = k, y = coherence)) +
   geom_line() +
   geom_point() +
   geom_point(
-    data = subset(coherence_results, k == 11),
-    aes(x = k, y = coherence),
-    color = "red",
-    size = 3
-  ) +
-  geom_point(
     data = subset(coherence_results, k == 7),
     aes(x = k, y = coherence),
-    color = "pink",
+    color = "red",
     size = 3
   ) +
   labs(
@@ -482,20 +478,15 @@ print(optimal_k)
 write.csv(coherence_results,"./data_final/coherence_2_30_tweets.csv")
 coherence_results <- read.csv("./data_final/coherence_2_30_tweets.csv")
 
+coherence_results <- coherence_results %>% filter(k <= 10)
 
 p_tweet_coherence <- ggplot(coherence_results, aes(x = k, y = coherence)) +
   geom_line() +
   geom_point() +
   geom_point(
-    data = subset(coherence_results, k == 28),
-    aes(x = k, y = coherence),
-    color = "red",
-    size = 3
-  ) +
-  geom_point(
     data = subset(coherence_results, k == 7),
     aes(x = k, y = coherence),
-    color = "pink",
+    color = "red",
     size = 3
   ) +
   labs(

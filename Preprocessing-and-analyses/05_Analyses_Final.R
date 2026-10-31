@@ -139,7 +139,6 @@ tweet_raw <- tweet_raw %>% left_join(twitter_users_year)
 
 article_counts <- article_counts %>% mutate(log_Article_Count = log(Article_Count))
 
-
 ## Chi-squared test to compare distribution of sentiment -----
 ### Tweets -----
 mean(tweet_raw$Raw_Sentiment_Score)
@@ -502,9 +501,11 @@ mk.test(weekly_dat_all$Users)
 mk.test(weekly_dat_all$Users_new)
 mk.test(weekly_dat_all$Tweet_Count)
 
-mk.test(article_counts$Vader_articles)
-mk.test(article_counts$Article_Count)
+weekly_dat_all_articles <- weekly_dat_all %>% filter(Article_Count > 0)
 
+
+mk.test(weekly_dat_all_articles$Article_Count)
+mk.test(weekly_dat_all_articles$Vader_articles)
 
 
 ## Finding weekly outliers -----
@@ -740,6 +741,42 @@ p1 <- ggplot(tweet_time_month, aes(x = month)) +
 
 p1
 
+tweet_time_month <- tweet_time_month %>% mutate(Month = month(month),
+                                                Year = year(month))
+
+# Checking out renewable energy
+
+tweet_outreach <- tweet_raw %>% filter(topic == 5)
+
+table(tweet_outreach$VADER_Sentiment)
+
+tweet_time_month_2017 <- tweet_time_month %>% filter(topic == "Outreach and education") %>% arrange(sent_dev) %>% filter(Year < 2018) %>% slice_head(n = 50)
+
+tweet_time_month_2018 <- tweet_time_month %>% filter(topic == "Outreach and education") %>% arrange(desc(sent_dev)) %>% filter(Year >= 2018) %>% slice_head(n = 50)
+
+
+tweet_outreach_neg <- tweet_outreach %>% filter(Year < 2018) %>% filter(grepl("outreach|education|event",Tweet_cleaned))%>% arrange(Raw_Sentiment_Score) %>% semi_join(tweet_time_month_2017 %>% dplyr::select(Month,Year))  %>% slice_head(n = 25) %>% dplyr::select(Date,Year,Tweet_cleaned,Raw_Sentiment_Score, VADER_Sentiment)
+tweet_outreach_pos <- tweet_outreach %>% filter(Year >= 2018) %>% filter(grepl("outreach|education|event",Tweet_cleaned)) %>% arrange(desc(Raw_Sentiment_Score)) %>% semi_join(tweet_time_month_2018 %>% dplyr::select(Month,Year)) %>% slice_head(n = 25) %>% dplyr::select(Date,Year,Tweet_cleaned,Raw_Sentiment_Score, VADER_Sentiment)
+
+tweet_outreach <- rbind(tweet_outreach_neg,tweet_outreach_pos) %>% arrange(Date)
+write.csv(tweet_outreach,"./data_final/outreach_tweets.csv")
+
+
+tweet_energy <- tweet_raw %>% filter(topic == 3)
+
+
+tweet_time_month_2019 <- tweet_time_month %>% filter(topic == "Renewable energy development") %>% arrange(desc(sent_dev)) %>% filter(Year < 2020) %>% slice_head(n = 25)
+
+tweet_time_month_2020 <- tweet_time_month %>% filter(topic == "Renewable energy development") %>% arrange(sent_dev) %>% filter(Year >= 2020) %>% slice_head(n = 25)
+
+tweet_energy_pos <- tweet_energy %>% filter(Year < 2020 & VADER_Sentiment == "positive") %>% filter(grepl("solar",Tweet_cleaned))%>% arrange(desc(Raw_Sentiment_Score)) %>% semi_join(tweet_time_month_2019 %>% dplyr::select(Month,Year)) %>% slice_head(n = 25) %>% dplyr::select(Date,Year,Tweet_cleaned,Raw_Sentiment_Score, VADER_Sentiment)
+tweet_energy_neg <- tweet_energy %>% filter(Year >= 2020 & VADER_Sentiment == "negative") %>% filter(grepl("solar",Tweet_cleaned)) %>% arrange(Raw_Sentiment_Score) %>% semi_join(tweet_time_month_2020 %>% dplyr::select(Month,Year)) %>% slice_head(n = 25) %>% dplyr::select(Date,Year,Tweet_cleaned,Raw_Sentiment_Score, VADER_Sentiment)
+
+tweet_energy <- rbind(tweet_energy_pos,tweet_energy_neg) %>% arrange(Date)
+write.csv(tweet_energy,"./data_final/energy_tweets.csv")
+
+
+
 monthly_totals_art <- article_raw %>% filter(!is.na(topic)) %>%
   mutate(month = make_date(year, month, 1)) %>%
   count(month, name = "total")
@@ -816,3 +853,8 @@ ggsave("./figures/Topic_trends_sentiment.jpeg", p_all,
        width = 8, height = 9, units = "in", dpi = 600)
 
 
+tweet_topic_sentiment <- tweet_raw %>% filter(!is.na(topic)) %>% group_by(topic) %>% summarise(mean_sent = mean(Raw_Sentiment_Score),
+                                                                                               sd_sent = sd(Raw_Sentiment_Score))
+
+article_topic_sentiment <- article_raw %>% filter(!is.na(topic)) %>% group_by(topic) %>% summarise(mean_sent = mean(Raw_Sentiment_Score),
+                                                                                               sd_sent = sd(Raw_Sentiment_Score))
